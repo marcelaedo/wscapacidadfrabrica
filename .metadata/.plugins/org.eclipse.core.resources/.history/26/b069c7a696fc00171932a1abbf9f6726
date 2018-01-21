@@ -1,0 +1,12 @@
+package cl.akzio.auth.central.obtenercapacidadfabrica.provider;
+
+public class LoginParams {
+
+	private 
+	
+	
+	params.setuser(username);
+	params.setpass(password);
+	params.sethost(host);
+	params.setport(port);
+}

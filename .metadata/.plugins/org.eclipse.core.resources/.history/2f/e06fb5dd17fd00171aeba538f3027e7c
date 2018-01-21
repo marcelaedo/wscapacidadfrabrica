@@ -1,0 +1,19 @@
+/* Propiedad de Akzio Fabrica Temuco. Todos los derechos reservados */
+package cl.akzio.auth.central.obtenercapacidadfabrica.dao;
+
+/**
+ * @author Marcel Aedo (Akzio Consultores S.A.) en nombre de Daniela Cruz(Akzio Consultores S.A.)
+ * @since 10-01-2018
+ * @version 1.0
+ */
+
+public class OracleDaoFactory extends ServiceDaoFactory{
+	/**
+	 * Devuelve una instancia de la implementacion oracle para ConsultaDao.
+	 * 
+	 * @return ConsultaDao  
+	 */
+	public ConsultaDaoOracleImpl getConsultaDao(){
+		return new ConsultaDaoOracleImpl();
+	}
+}

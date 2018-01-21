@@ -1,0 +1,7 @@
+INDEX VERSION 1.3+/home/marcel/workspace/ObtenerCapacidad de trabajo/wks/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1358302349.index
+2845472576.index
+3838573261.index
+133190864.index
+4197784487.index
+2128573976.index

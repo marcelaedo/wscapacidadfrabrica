@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema elementFormDefault="qualified"
+    targetNamespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/fault"
+    xmlns:fault="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/fault"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="obtenerCapacidadFabricaFaultDocument" nillable="true"
+        type="fault:obtenerCapacidadFabricaFaultType" />
+    <xsd:complexType name="obtenerCapacidadFabricaFaultType">
+        <xsd:sequence>
+            <xsd:element name="codigo" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="descripcion" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="fechaOperacion" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="idOperacion" minOccurs="1" nillable="false" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

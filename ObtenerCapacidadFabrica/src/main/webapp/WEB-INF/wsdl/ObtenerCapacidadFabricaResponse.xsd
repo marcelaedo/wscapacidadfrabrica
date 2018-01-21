@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema elementFormDefault="qualified"
+    targetNamespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/response"
+    xmlns:response="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/response"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="obtenerCapacidadFabricaResponseDocument" type="response:obtenerCapacidadFabricaResponseType"/>
+    <xsd:complexType name="obtenerCapacidadFabricaResponseType">
+        <xsd:sequence>
+            <xsd:element name="response" nillable="false" type="response:responseType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="responseType">
+        <xsd:sequence>
+            <xsd:element name="headerOut" minOccurs="1" nillable="false" type="response:headerOutType"/>
+			<xsd:element name="capacidadFabrica" minOccurs="1" nillable="false" type="response:capacidadFabricaType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="headerOutType">
+        <xsd:sequence>
+            <xsd:element name="code" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="description" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="operationDate" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="operationId" minOccurs="1" nillable="false" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+        <xsd:complexType name="capacidadFabricaType">
+        <xsd:sequence>
+            <xsd:element name="hhTotales" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="hhReservadas" minOccurs="1" nillable="false" type="xsd:string"/>
+            <xsd:element name="fechaInicioConsulta" minOccurs="1" nillable="false" type="xsd:string"/>
+			<xsd:element name="fechaEntrega" minOccurs="1" nillable="false" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,200 @@
+/* Propiedad de Akzio Fabrica Temuco. Todos los derechos reservados */
+
+package cl.akzio.auth.central.obtenercapacidadfabrica.dao;
+import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleTypes;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.BusinessException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.ConfigurationException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.SystemException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.ConnectionOracle;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.request.ObtenerCapacidadFabricaRequestType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.response.ResponseType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.Constantes;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.MensajesUtil;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.Utils;
+
+/**
+ * @author Marcel Aedo (Akzio Consultores S.A.) en nombre de Daniela Cruz(Akzio Consultores S.A.)
+ * @since 10-01-2018
+ * @version 1.0
+ */
+
+public class ConsultaDaoOracleImpl extends ConnectionOracle implements ConsultaDao, Serializable{
+
+	/**
+	 * Atributo serialVersionUID long
+	 */
+	private static final long serialVersionUID = -9215683510718752147L;
+
+	/**
+	 * ResponseType consultarCuotasEquipo
+	 */
+	@Override
+	public ResponseType obtenerCapacidadFabrica(ObtenerCapacidadFabricaRequestType request) throws ConfigurationException, SystemException, BusinessException{
+		ResponseType response = new ResponseType();
+		Boolean error = Boolean.FALSE;
+		conectar(Boolean.FALSE);
+				try {
+					response= consultarDatosFacturacion(request.getRequest().getHeaderIn().getApplication(),request.getRequest().getHeaderIn().getUsername());
+				}catch (ConfigurationException e){
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					getLogger().error("Salta ConfigurationException");
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					error = Boolean.TRUE;
+					throw e;
+				}catch(SystemException e){
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					getLogger().error("Salta SystemException");
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					error = Boolean.TRUE;
+					throw e;
+				}catch (BusinessException e){
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					getLogger().error("Salta SystemException");
+					getLogger().error(e.getCodigo().concat(" ").concat(e.getMensaje()));
+					error = Boolean.TRUE;
+					throw e;
+				}catch (SQLException e){
+					getLogger().error("Salta SQLException: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+					error = Boolean.TRUE;
+					getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204 + "] " 
+							+ MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204));
+					throw new SystemException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0200,
+							MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204));
+				} catch (Exception e){
+					getLogger().error("Salta Exception: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+					error = Boolean.TRUE;
+					getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201 + "] " 
+							+ MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201));
+					throw new SystemException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0200,
+							MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201));
+				} finally {
+					try{
+						getLogger().info("Desconectando de la Base de datos...");
+						desconectar();
+					}catch(SQLException e){
+						getLogger().warn("Ha ocurrido un error al desconectar de la base de datos");
+					}
+					if (error == true){
+						getLogger().info("Fin erroneo de la invocacion a base de datos");
+					}
+				}
+				getLogger().info("Fin exitoso de la invocacion a base de datos");
+		return response;
+	}
+
+	public ResponseType consultarDatosFacturacion(String dbiRut, String dbiCodigoLineaSuscripcion)
+			throws ConfigurationException, SystemException, BusinessException, SQLException{
+		getLogger().info("Inicio Metodo consultarDatosFacturacion");
+		getLogger().info("Preparando invocacion a base de datos...");
+		ResponseType response = new ResponseType();
+		Boolean error = Boolean.FALSE;
+		CallableStatement objCallStatement = null;
+		ResultSet objResultSet = null;
+
+		try{
+			getLogger().info("Preparando ejecucion de procedimiento");
+			getLogger().info("Variable Rut '" + dbiRut + "' VARCHAR2 ");
+			getLogger().info("Variable CodigoLineaSuscripcion '" + dbiCodigoLineaSuscripcion + "' VARCHAR2 ");
+			getLogger().info("Ejecutando procedimiento END PKG_ASI_SERVICIOSASI.PRO_ASI_CONSDATOSFACCLIENTE('" + dbiRut + "', '" + dbiCodigoLineaSuscripcion+ "')");
+			objCallStatement = getObjConnOracle().prepareCall("{call PKG_ASI_SERVICIOSASI.PRO_ASI_CONSDATOSFACCLIENTE(?, ?, ?, ?, ?)}");
+			objCallStatement.setString(1, dbiRut);
+			objCallStatement.setString(2, dbiCodigoLineaSuscripcion);
+			objCallStatement.registerOutParameter(3, OracleTypes.VARCHAR);
+			objCallStatement.registerOutParameter(4, OracleTypes.VARCHAR);
+			objCallStatement.registerOutParameter(5, OracleTypes.CURSOR);
+			objCallStatement.execute();
+			String codigo = objCallStatement.getString(3);
+			String descripcion = objCallStatement.getString(4);
+			if(codigo != null){
+				if(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0000.equals(codigo)){
+					try{
+						objResultSet = (ResultSet) objCallStatement.getObject(5);
+						getLogger().info("Ejecucion exitosa, extrayendo datos...");
+				
+						while(objResultSet.next()){
+							
+						}
+					}catch (SQLException e){
+						getLogger().error(e.getMessage());
+					}
+					}else{
+						if(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0302.equals(codigo)){
+							String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0302);
+							getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0302 + "] " + mensaje);
+							throw new BusinessException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300, mensaje);
+						}else if(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0303.equals(codigo)){
+							String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0303);
+							getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0303 + "] " + mensaje);
+							throw new BusinessException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300, mensaje);
+						}else if(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0304.equals(codigo)){
+							String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0304);
+							getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0304 + "] " + mensaje);
+							throw new BusinessException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300, mensaje);
+						}else if(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0305.equals(codigo)){
+							String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0305);
+							getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0305 + "] " + mensaje);
+							throw new BusinessException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300, mensaje);
+						}else{ 
+							getLogger().error("Error/NOOK en la ejecucion del procedimiento almacenado");
+							getLogger().error("Codigo error BBDD: " + codigo);
+							getLogger().error("Descripcion error BBDD: " + descripcion);
+							throw new BusinessException(codigo, descripcion);
+						}
+					}
+				}else{
+					getLogger().error("No se ha recibido respuesta desde el package");
+					String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0205);
+					getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0205 + "] " + mensaje);
+					throw new SystemException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0205, mensaje);
+				}
+			}catch(ConfigurationException e){
+				getLogger().error("Ocurre ConfigurationExceptio: Codigo[" + e.getCodigo()+ "], Mensaje[" + e.getMensaje() + "]");
+				error = Boolean.TRUE;
+				throw e;
+			}catch (BusinessException e){
+				getLogger().error("Ocurre BusinessException: Codigo[" + e.getCodigo() + "], Mensaje[" + e.getMensaje() + "]");
+				error = Boolean.TRUE;
+				throw e;
+			}catch(SystemException e){
+				getLogger().error("Ocurre SystemException: Codigo[" + e.getCodigo() + "], Mensaje[" + e.getMensaje() + "]");
+				error = Boolean.TRUE;
+				throw e;
+			}catch(SQLException e){
+				getLogger().error("Ocurre SQLException: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+				error = Boolean.TRUE;
+				String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204);
+				getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204 + "] " + mensaje);
+				throw new SystemException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0204, mensaje);
+			}catch(Exception e){
+				getLogger().error("Ocurre Exception: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+				error = Boolean.TRUE;
+				String mensaje = MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201);
+				getLogger().error("Codigo [" + Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201 + "] " + mensaje);
+				throw new SystemException(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0201, mensaje);
+			}finally{
+				try{
+					if(objResultSet != null && objResultSet instanceof ResultSet){
+						objResultSet.close();
+						objResultSet = null;
+					}
+                    if(objCallStatement != null && objCallStatement instanceof CallableStatement){
+                        objCallStatement.close();
+                        objCallStatement = null;
+                    }
+				}catch(SQLException e){
+					getLogger().warn("Ocurre SQLException: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+					getLogger().warn("Ha ocurrido un error al cerrar instancias de ResultSet");
+					throw e;
+				}
+
+			}
+			getLogger().info("Fin metodo consultarDatosFacturacion");
+			return response;
+		}
+
+	}

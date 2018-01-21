@@ -1,0 +1,27 @@
+/* Propiedad de Akzio Fabrica Temuco. Todos los derechos reservados */
+package cl.akzio.auth.central.obtenercapacidadfabrica.dao;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.BusinessException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.ConfigurationException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.SystemException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.request.ObtenerCapacidadFabricaRequestType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.response.ResponseType;
+
+/**
+ * @author Marcel Aedo (Akzio Consultores S.A.) en nombre de Daniela Cruz(Akzio Consultores S.A.)
+ * @since 10-01-2018
+ * @version 1.0
+ */
+
+public interface ConsultaDao{
+	/**
+	 * 	Permite consultar 
+	 * @param consultarDatosFacturacionClienteRequest RequestType
+     * @return ResponseType
+     * @throws ConfigurationException
+     * @throws SystemException
+     * @throws BusinessException
+	 */
+	public ResponseType obtenerCapacidadFabrica(ObtenerCapacidadFabricaRequestType requestType)
+			throws ConfigurationException, SystemException, BusinessException;
+}

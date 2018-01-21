@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<wsdl:definitions name="ObtenerCapacidadFabrica"
+    targetNamespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/"
+    xmlns:tns="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/"
+    xmlns:request="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/request"
+    xmlns:response="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/response"
+    xmlns:fault="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/fault"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema
+            targetNamespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/"
+            xmlns:tns="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/">
+            <!-- Define campos de entrada -->
+            <xsd:import namespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/request"
+                schemaLocation="ObtenerCapacidadFabricaRequest.xsd"/>
+            <!-- Define campos de salida -->
+            <xsd:import namespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/response"
+                schemaLocation="ObtenerCapacidadFabricaResponse.xsd"/>
+            <!-- Define la salida de errores -->
+            <xsd:import namespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/fault"
+                schemaLocation="ObtenerCapacidadFabricaFault.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="obtenerCapacidadFabricaRequestMessage">
+        <wsdl:part name="obtenerCapacidadFabricaRequest" element="request:obtenerCapacidadFabricaRequestDocument" />
+    </wsdl:message>
+    <wsdl:message name="obtenerCapacidadFabricaResponseMessage">
+        <wsdl:part name="obtenerCapacidadFabricaResponse" element="response:obtenerCapacidadFabricaResponseDocument" />
+    </wsdl:message>
+    <wsdl:message name="obtenerCapacidadFabricaFaultMessage">
+        <wsdl:part name="obtenerCapacidadFabricaFault" element="fault:obtenerCapacidadFabricaFaultDocument" />
+    </wsdl:message>
+    <wsdl:portType name="ObtenerCapacidadFabricaPortType">
+        <wsdl:operation name="obtenerCapacidadFabrica">
+            <wsdl:input message="tns:obtenerCapacidadFabricaRequestMessage" />
+            <wsdl:output message="tns:obtenerCapacidadFabricaResponseMessage" />
+            <wsdl:fault name="obtenerCapacidadFabricaFault" message="tns:obtenerCapacidadFabricaFaultMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ObtenerCapacidadFabricaBinding" type="tns:ObtenerCapacidadFabricaPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="obtenerCapacidadFabrica">
+            <soap:operation soapAction="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/obtenercapacidadfabrica" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="obtenerCapacidadFabricaFault">
+                <soap:fault name="obtenerCapacidadFabricaFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ObtenerCapacidadFabrica">
+        <wsdl:port binding="tns:ObtenerCapacidadFabricaBinding" name="ObtenerCapacidadFabricaPort">
+            <soap:address location="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/ObtenerCapacidadFabrica" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

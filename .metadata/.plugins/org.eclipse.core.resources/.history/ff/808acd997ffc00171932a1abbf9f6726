@@ -1,0 +1,101 @@
+package cl.akzio.auth.central.obtenercapacidadfabrica.dao;
+
+public class proyecto {
+	
+	private int codi_proyecto;
+	private String codi_redmine;
+	private String nomb_proyecto;
+	private int codi_solicitud;
+	
+	
+	public proyecto() {
+		super();
+	}
+
+
+	public proyecto(int codi_proyecto, String codi_redmine,
+			String nomb_proyecto, int codi_solicitud) {
+		super();
+		this.codi_proyecto = codi_proyecto;
+		this.codi_redmine = codi_redmine;
+		this.nomb_proyecto = nomb_proyecto;
+		this.codi_solicitud = codi_solicitud;
+	}
+
+
+	/**
+	 * @return the codi_proyecto
+	 */
+	public int getCodi_proyecto() {
+		return codi_proyecto;
+	}
+
+
+	/**
+	 * @param codi_proyecto the codi_proyecto to set
+	 */
+	public void setCodi_proyecto(int codi_proyecto) {
+		this.codi_proyecto = codi_proyecto;
+	}
+
+
+	/**
+	 * @return the codi_redmine
+	 */
+	public String getCodi_redmine() {
+		return codi_redmine;
+	}
+
+
+	/**
+	 * @param codi_redmine the codi_redmine to set
+	 */
+	public void setCodi_redmine(String codi_redmine) {
+		this.codi_redmine = codi_redmine;
+	}
+
+
+	/**
+	 * @return the nomb_proyecto
+	 */
+	public String getNomb_proyecto() {
+		return nomb_proyecto;
+	}
+
+
+	/**
+	 * @param nomb_proyecto the nomb_proyecto to set
+	 */
+	public void setNomb_proyecto(String nomb_proyecto) {
+		this.nomb_proyecto = nomb_proyecto;
+	}
+
+
+	/**
+	 * @return the codi_solicitud
+	 */
+	public int getCodi_solicitud() {
+		return codi_solicitud;
+	}
+
+
+	/**
+	 * @param codi_solicitud the codi_solicitud to set
+	 */
+	public void setCodi_solicitud(int codi_solicitud) {
+		this.codi_solicitud = codi_solicitud;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "proyecto [codi_proyecto=" + codi_proyecto + ", codi_redmine="
+				+ codi_redmine + ", nomb_proyecto=" + nomb_proyecto
+				+ ", codi_solicitud=" + codi_solicitud + "]";
+	}
+	
+	
+}

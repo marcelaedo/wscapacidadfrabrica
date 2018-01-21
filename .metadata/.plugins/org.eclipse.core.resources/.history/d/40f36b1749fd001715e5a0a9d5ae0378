@@ -1,0 +1,39 @@
+package cl.akzio.auth.central.obtenercapacidadfabrica.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+
+public class ProyectoMySqlDAO  implements ProyectoDAO{
+
+	private Connection conn;
+	
+	public ProyectoMySqlDAO (Connection conn){
+		this.conn=conn;
+	}
+	
+	
+	private ProyectoDTO convertir(ResultSet rs) throws SQLException {
+		int codiProyecto=rs.getInt("codi_proyecto");
+		String codiRedmine=rs.getString("codi_redmine");
+		String nombProyecto=rs.getString("nomb_proyecto");
+		int codiSolicitud=rs.getInt("codi_solicitud");
+		ProyectoDTO proyecto =new ProyectoDTO(codiProyecto, codiRedmine, nombProyecto, codiSolicitud);
+		
+		return null;
+		
+	}
+	@Override
+	public List<ProyectoDTO> getProyecto() throws SQLException {
+		
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,28 @@
+package cl.akzio.auth.central.obtenercapacidadfabrica.provider;
+
+public class MyBatisConnecitionFactory {
+
+	private static SqlSessionFactory sqlSessionFactory;
+	 
+    static {
+        try {
+ 
+            String resource = "mybatis-config.xml";
+            Reader reader = Resources.getResourceAsReader(resource);
+ 
+            if (sqlSessionFactory == null) {
+                sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException iOException) {
+            iOException.printStackTrace();
+        }
+    }
+ 
+    public static SqlSessionFactory getSqlSessionFactory() {
+ 
+        return sqlSessionFactory;
+    }
+	
+}

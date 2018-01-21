@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema elementFormDefault="qualified"
+    targetNamespace="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/request"
+    xmlns:request="http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/request"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="obtenerCapacidadFabricaRequestDocument" type="request:obtenerCapacidadFabricaRequestType"/>
+    <xsd:complexType name="obtenerCapacidadFabricaRequestType">
+        <xsd:sequence>
+            <xsd:element name="request" nillable="false" type="request:requestType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="requestType">
+        <xsd:sequence>
+            <xsd:element name="headerIn" minOccurs="1" nillable="false" type="request:headerInType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="headerInType">
+        <xsd:sequence>
+            <xsd:element name="username" minOccurs="1" nillable="true" type="xsd:string" />
+            <xsd:element name="application" minOccurs="1" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,160 @@
+
+package cl.akzio.auth.central.obtenercapacidadfabrica.service;
+import javax.jws.HandlerChain;
+import javax.jws.WebService;
+import javax.xml.ws.BindingType;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ConsultaDao;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ServiceDaoFactory;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.BusinessException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.ConfigurationException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.DummyException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.exception.SystemException;
+import cl.akzio.auth.central.obtenercapacidadfabrica.log4j.EntelLogger;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.fault.ObtenerCapacidadFabricaFaultType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.request.ObtenerCapacidadFabricaRequestType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.response.HeaderOutType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.response.ObtenerCapacidadFabricaResponseType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.types.response.ResponseType;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.Constantes;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.MensajesUtil;
+import cl.akzio.auth.central.obtenercapacidadfabrica.util.Utils;
+import cl.akzio.auth.central.obtenercapacidadfabrica.validador.Validador;
+/**
+ * The Class ConsultarDescLineasAdicionalesResponseType.
+ *
+ * @author Pablo Staub  (Akzio Consultores S.A.) en nombre de Patricio Alarcon (Activacion Postpago, EntelPcs)
+ * @version 1.0
+ * @since 17-10-2017
+ */
+@WebService(portName = "ObtenerCapacidadFabricaPort",
+serviceName = "ObtenerCapacidadFabrica",
+targetNamespace = "http://www.akzio.cl/auth/central/t/obtenercapacidadfabrica/",
+wsdlLocation = "WEB-INF/wsdl/ObtenerCapacidadFabrica.wsdl",
+endpointInterface = "cl.akzio.auth.central.obtenercapacidadfabrica.service.ObtenerCapacidadFabricaPortType")
+@BindingType("http://schemas.xmlsoap.org/wsdl/soap/http")
+@HandlerChain(file = "../handler/handler-chain.xml")
+public class ObtenerCapacidadFabricaPortTypeImpl {
+	/** Atributo logger EntelLogger. */
+	private EntelLogger logger = EntelLogger.getLogger("ObtenerCapacidadFabricaPortTypeImpl");
+
+	public ObtenerCapacidadFabricaResponseType obtenerCapacidadFabrica(ObtenerCapacidadFabricaRequestType obtenerCapacidadFabricaRequestType)throws ObtenerCapacidadFabricaFaultMessage {
+		Long timeInicio = Utils.getTime();
+		getLogger().setTransId(timeInicio.toString());
+		getLogger().info("Inicio Ejecucion Servicio ConsultarDescLineasAdicionales");
+		ObtenerCapacidadFabricaResponseType respuesta = new ObtenerCapacidadFabricaResponseType();
+		ResponseType response = new ResponseType();
+
+		try{
+			getLogger().info("Version aplicacion [" + Constantes.OBTENERCAPACIDADFABRICA_VERSION_APP + "]");
+			getLogger().info("Version configuracion [" + MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG,Constantes.OBTENERCAPACIDADFABRICA_KEY_VERSION_CONFIG) + "]");
+
+			Validador validador = new Validador();
+			/* Validaciones de modo de ejecucion */
+			validador.modo();
+			/* Validaciones de datos de entrada */
+			validador.validarCamposEntradas(obtenerCapacidadFabricaRequestType);
+
+			/* Preparacion Consulta a Base de datos */
+			ServiceDaoFactory factory = ServiceDaoFactory.getDAOFactory(ServiceDaoFactory.ORACLE);
+			ConsultaDao consultaDao = factory.getConsultaDao();		
+
+			/* Invocando a DAO para consultar estado de la transaccion */
+			response = consultaDao.obtenerCapacidadFabrica(obtenerCapacidadFabricaRequestType);
+			response.setHeaderOut(new HeaderOutType());
+			response.getHeaderOut().setCode(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0000);
+			response.getHeaderOut().setDescription(MensajesUtil.getMensaje(Constantes.OBTENERCAPACIDADFABRICA_RESOURCE_CONFIG,Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0000));
+		}catch(DummyException e){
+			if(e.getEsResponse()){
+			}else{
+				lanzaFault(obtenerCapacidadFabricaRequestType, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300, e.getMensaje(), timeInicio);
+			}
+		} catch (BusinessException e){
+			getLogger().error("Ocurre BusinessException: Codigo[" + e.getCodigo() + "], Mensaje[" + e.getMensaje() + "]");
+			response.setHeaderOut(new HeaderOutType());
+			
+			response.getHeaderOut().setCode(Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0300);
+			response.getHeaderOut().setDescription(e.getMensaje());
+		} catch (SystemException e){
+			getLogger().error("Ocurre SystemException: Codigo[" + e.getCodigo() + "], Mensaje[" + e.getMensaje() + "]");
+			response.setHeaderOut(new HeaderOutType());
+			lanzaFault(obtenerCapacidadFabricaRequestType, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0200, e.getMensaje(), timeInicio);
+		} catch (ConfigurationException e){
+			getLogger().error("Ocurre ConfigurationException: Codigo[" + e.getCodigo() + "], Mensaje[" + e.getMensaje() + "]");
+			response.setHeaderOut(new HeaderOutType());
+			lanzaFault(obtenerCapacidadFabricaRequestType, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0100, e.getMensaje(), timeInicio);
+		} catch (Exception e){
+			getLogger().error("Ocurre Exception: [" + Utils.quitarSaltoLinea(String.valueOf(e)) + "]");
+			response.setHeaderOut(new HeaderOutType());
+			lanzaFault(obtenerCapacidadFabricaRequestType, Constantes.OBTENERCAPACIDADFABRICA_CODIGO_0200, "Error en Sistema [Error en la ejecucion del WS]", timeInicio);
+		}
+
+		Long timeFin = Utils.getTime();
+		@SuppressWarnings("unused")
+		Long timeEjec = timeFin - timeInicio;
+		//response.getHeaderOut().setFechaOperacion(Utils.formatFechaLong(timeFin, Constantes.CONSULTADESCLIENASADICIONAL_PATTERN_FECHA_OUT));
+		//response.getHeaderOut().setIdOperacion(getLogger().getTransactionId());
+
+		getLogger().info("Parametros de salida:  " + response.toString());
+		getLogger().info("Tiempo de ejecucion [" + tiempoEjecucion(timeInicio) + " ms]");
+		getLogger().info("Fin Ejecucion Servicio ConsultarDescLineasAdicionales.\n");
+
+		respuesta.setResponse(response);
+		return respuesta;
+	}
+
+	/**
+	 * Metodo que permite lanzar una excepcion controlada por FaultType.<br/>
+	 * Registra fin de la ejecucion del servicio.
+	 *
+	 * @param request the request
+	 * @param codigo String
+	 * @param descripcion String
+	 * @param timeInicio Long
+	 * @throws CONSULTADESCLIENASADICIONALFaultMessage the obtener planes en descuento fault message
+	 */
+	public void lanzaFault(ObtenerCapacidadFabricaRequestType request, String codigo, String descripcion, Long timeInicio) throws ObtenerCapacidadFabricaFaultMessage{
+		ObtenerCapacidadFabricaFaultMessage fault = new  ObtenerCapacidadFabricaFaultMessage("", new  ObtenerCapacidadFabricaFaultType());
+
+		fault.getFaultInfo().setCodigo(codigo);
+		fault.getFaultInfo().setDescripcion(descripcion);
+		Long timeFin = Utils.getTime();
+		// Long timeEjec = timeFin - timeInicio;
+		fault.getFaultInfo().setFechaOperacion(Utils.formatFechaLong(timeFin, Constantes.OBTENERCAPACIDADFABRICA_PATTERN_FECHA_OUT));
+		fault.getFaultInfo().setIdOperacion(getLogger().getTransactionId());
+		getLogger().info("Parametros de salida de Fault:");
+		getLogger().info("  " + fault.getFaultInfo().toString());
+		getLogger().info("Tiempo de ejecucion [" + tiempoEjecucion(timeInicio) + " ms]");
+		getLogger().info("Fin ejecucion servicio  ConsultarDescLineasAdicionales.\n");
+		throw fault;
+	}
+
+	/**
+	 * Gets the logger.
+	 *
+	 * @return EntelLogger
+	 */
+	public EntelLogger getLogger() {
+		return logger;
+	}
+
+	/**
+	 * Tiempo ejecucion.
+	 *
+	 * @param inicio the inicio
+	 * @return the long
+	 */
+	private long tiempoEjecucion(long inicio){
+		long fin = Utils.getTime();
+		return fin - inicio;
+	}
+
+	/**
+	 * @param logger the logger to set
+	 */
+	public void setLogger(EntelLogger logger) {
+		this.logger = logger;
+	}
+	
+	
+}

@@ -1,0 +1,32 @@
+package cl.akzio.auth.central.obtenercapacidadfabrica.provider;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
+
+
+
+public class JDBCMySQL {
+	
+	private Connection conn =null;
+
+	
+	public void GenerarConexion() throws SQLException {
+		String jdbc = "jdbc:mysql://localhost:3306/gestion_proyectos";
+		
+		conn = DriverManager.getConnection(jdbc,"gest_proys", "ges131Qft");
+	
+	}
+
+	public void close() throws SQLException{
+		if (conn !=null){
+			conn.close();
+		}
+	}
+	
+	
+	
+	
+}
