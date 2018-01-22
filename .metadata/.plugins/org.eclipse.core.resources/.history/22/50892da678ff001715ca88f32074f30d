@@ -1,0 +1,31 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.JDBCMySQL;;
+
+public class prubc {
+
+	public static void main(String[] args) throws SQLException {
+		
+		ProyectoMySqlDAO proyecto=new ProyectoMySqlDAO();
+		proyecto.GenerarConexion();
+		try {
+			ProyectoDAO proy=new ProyectoMySqlDAO();
+			List<ProyectoDTO> proyectos= proy.getProyecto();
+			for (ProyectoDTO proyectoDTO : proyectos) {
+				System.out.println(proyectoDTO.toString());
+			}
+			
+		} finally  {
+			if (proyecto!=null) {
+				proyecto.close();
+			}
+		}
+	}
+
+}

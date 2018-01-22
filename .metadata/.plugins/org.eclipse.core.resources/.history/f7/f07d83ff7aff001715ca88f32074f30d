@@ -1,0 +1,20 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.JDBCMySQL;;
+
+public class prubc {
+
+public static void main(String[] args) throws SQLException {
+		
+		JDBCMySQL conn = new JDBCMySQL();
+		conn.GenerarConexion();
+		conn.consulta();
+	}
+	
+}

@@ -15,9 +15,33 @@ import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
 
 public class ProyectoMySqlDAO  implements ProyectoDAO{
 	
+	private Connection conn;
+	/**
+	 * @param conn
+	 */
+	public void GenerarConexion() throws SQLException, ClassNotFoundException {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		String jdbc = "jdbc:mysql://localhost:3306/gestion_proyectos";
+		conn = DriverManager.getConnection(jdbc,"gest_proys", "ges131Qft");
+	
+	}
 	
 
-	private Connection conn;
+
+	public ProyectoMySqlDAO() {
+		super();
+	}
+
+
+
+	public ProyectoMySqlDAO(Connection conn) {
+		super();
+		this.conn = conn;
+	}
+
+
+
 	final String GETPRO=""
 			+ "select "
 					+ "pro.codi_proyecto,"
@@ -41,20 +65,13 @@ public class ProyectoMySqlDAO  implements ProyectoDAO{
 					+ "and pro.corr_seq=(select max(pro2.corr_seq) from pro_neg_proyecto pro2 where pro.codi_proyecto=pro2.codi_proyecto)";
 			
 	
-	
-	
-	public ProyectoMySqlDAO (Connection conn){
-		this.conn=conn;
-	}
-	
-	
+
 	private ProyectoDTO convertir(ResultSet rs) throws SQLException {
 		int codiProyecto=rs.getInt("codi_proyecto");
 		String codiRedmine=rs.getString("codi_redmine");
 		String nombProyecto=rs.getString("nomb_proyecto");
 		int codiSolicitud=rs.getInt("codi_solicitud");
 		ProyectoDTO proyecto =new ProyectoDTO(codiProyecto, codiRedmine, nombProyecto, codiSolicitud);
-		
 		return proyecto;
 	}
 	@Override
@@ -95,22 +112,26 @@ public class ProyectoMySqlDAO  implements ProyectoDAO{
 		
 		return proyecto;
 	}
-	public static void main(String[] args) throws SQLException {
-		Connection conn=null;
-		
-		try {
-			conn= DriverManager.getConnection("jdbc:mysql://localhost/gestion_proyectos", "gest_proys", "ges131Qft");
-			ProyectoDAO proy=new ProyectoMySqlDAO(conn);
-			List<ProyectoDTO> proyectos= proy.getProyecto();
-			for (ProyectoDTO proyectoDTO : proyectos) {
-				System.out.println(proyectoDTO.toString());
-			}
-			
-		} finally  {
-			if (conn!=null) {
-				conn.close();
-			}
+	public void close() throws SQLException{
+		if (conn !=null){
+			conn.close();
 		}
 	}
+
+
+
+	public Connection getConn() {
+		return conn;
+	}
+
+
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+	
+	
+	
+	
 
 }
