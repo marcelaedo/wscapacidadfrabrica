@@ -4,31 +4,52 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.UsuarioDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ArtefectoMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.FechaEntregaDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.FechaEntregaMySqlDAO;
 import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoDAO;
 import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoMySqlDAO;
-import cl.akzio.auth.central.obtenercapacidadfabrica.provider.JDBCMySQL;;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.UsuarioMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.JDBCMySQL;
 
 public class prubc {
 
+	public static void main(String[] args) throws SQLException,
+			ClassNotFoundException {
 
+		// JDBCMySQL conn = new JDBCMySQL();
+		// conn.GenerarConexion();
+		// conn.consulta();
+		// conn.GenerarConexion();
 
-public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		
-//		JDBCMySQL conn = new JDBCMySQL();
-//		conn.GenerarConexion();
-//		conn.consulta();
-//    ProyectoMySqlDAO conn = null;
-//    conn.GenerarConexion();
-//    
-//    
-//	ProyectoDAO proyecto =new  ProyectoMySqlDAO (conn);
-//	List<ProyectoDTO> proyectos= proyecto.getProyecto();
-//	for (ProyectoDTO proyectoDTO : proyectos) {
-//		System.out.println(proyectoDTO.toString());
-//	}
-//	
-		
-		
+		// prueba data de query de proecytos
+		ProyectoMySqlDAO conn = new ProyectoMySqlDAO();
+		conn.GenerarConexion();
+		conn.consulta();
+		System.out.println("fin.-------");
+
+		// prueba de query de usuarios
+
+		UsuarioMySqlDAO conn2 = new UsuarioMySqlDAO();
+		conn2.GenerarConexion();
+		conn2.consulta();
+		System.out.println("fin.-------");
+
+		// prueba de query para artefactos
+
+		ArtefectoMySqlDAO conn3 = new ArtefectoMySqlDAO();
+		conn3.GenerarConexion();
+		conn3.consulta();
+		System.out.println("fin.-------");
+
+		// prueba de query para obtener fecha
+
+		FechaEntregaMySqlDAO conn4 = new FechaEntregaMySqlDAO();
+		conn4.GenerarConexion();
+		conn4.obtenerfechaEntrega();
+		System.out.println("fin.-------");
+
 	}
-	
+
 }

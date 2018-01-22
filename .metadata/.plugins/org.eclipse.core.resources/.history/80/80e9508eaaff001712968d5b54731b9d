@@ -1,0 +1,43 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.UsuarioDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.ProyectoMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.dao.UsuarioMySqlDAO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.JDBCMySQL;
+
+
+public class prubc {
+
+
+
+public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		
+//		JDBCMySQL conn = new JDBCMySQL();
+//		conn.GenerarConexion();
+//		conn.consulta();
+//		conn.GenerarConexion();
+    
+// prueba data de query de proecytos 
+	ProyectoMySqlDAO conn=new ProyectoMySqlDAO();
+	conn.GenerarConexion();
+	List<ProyectoDTO>proyectos = conn.getProyecto();
+	conn.consulta();
+		System.out.println("fin.-------");
+
+// prueba de query de usuarios
+		
+		UsuarioMySqlDAO conn2=new UsuarioMySqlDAO();
+		conn.GenerarConexion();
+		List<UsuarioDTO>usuarios = conn2.getUsuario();
+		conn.consulta();
+			System.out.println("fin.-------");
+		
+		
+	}
+	
+}

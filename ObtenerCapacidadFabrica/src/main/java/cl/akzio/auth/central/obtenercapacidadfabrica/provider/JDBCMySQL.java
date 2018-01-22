@@ -20,21 +20,23 @@ public class JDBCMySQL {
 	
 	}
 	
-//	public  void consulta() throws SQLException{
-//		Statement statement=conn.createStatement();
-//		ResultSet rs = statement.executeQuery("select codi_redmine, nmro_hhsolicitadas, fech_entrega from fab_neg_artefactos");
-//		while (rs.next()) {
-//			String c_redmine= rs.getString("codi_redmine");
-//			String n_hh= rs.getString("nmro_hhsolicitadas");
-//			String f_entrege= rs.getString("fech_entrega");
-//			System.out.println("codi_redmine:" +c_redmine+"hh_solicitadas: "+n_hh +"entrega:"+f_entrege);
-//			
-//		}
-//		rs.close();
-//		statement.close();
-//
-//		
-//	}
+	
+	
+	public  void consulta() throws SQLException{
+		Statement statement=conn.createStatement();
+		ResultSet rs = statement.executeQuery("select codi_redmine, nmro_hhsolicitadas, fech_entrega from fab_neg_artefactos");
+		while (rs.next()) {
+		String c_redmine= rs.getString("codi_redmine");
+			String n_hh= rs.getString("nmro_hhsolicitadas");
+			String f_entrege= rs.getString("fech_entrega");
+			System.out.println("codi_redmine:" +c_redmine+"hh_solicitadas: "+n_hh +"entrega:"+f_entrege);
+			
+		}
+			rs.close();
+			statement.close();
+
+		
+	}
 
 	public void close() throws SQLException{
 		if (conn !=null){
