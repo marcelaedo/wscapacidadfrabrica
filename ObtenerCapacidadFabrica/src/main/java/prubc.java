@@ -31,24 +31,23 @@ public class prubc {
 
 		// prueba de query de usuarios
 
-		UsuarioMySqlDAO conn2 = new UsuarioMySqlDAO();
-		conn2.GenerarConexion();
-		conn2.consulta();
+		UsuarioMySqlDAO users=new UsuarioMySqlDAO();
+		users.consulta();
 		System.out.println("fin.-------");
 
 		// prueba de query para artefactos
 
-		ArtefectoMySqlDAO conn3 = new ArtefectoMySqlDAO();
-		conn3.GenerarConexion();
-		conn3.consulta();
-		System.out.println("fin.-------");
+//		ArtefectoMySqlDAO conn3 = new ArtefectoMySqlDAO();
+//		conn3.GenerarConexion();
+//		conn3.consulta();
+//		System.out.println("fin.-------");
 
 		// prueba de query para obtener fecha
 
-		FechaEntregaMySqlDAO conn4 = new FechaEntregaMySqlDAO();
-		conn4.GenerarConexion();
-		conn4.obtenerfechaEntrega();
-		System.out.println("fin.-------");
+//		FechaEntregaMySqlDAO conn4 = new FechaEntregaMySqlDAO();
+//		conn4.GenerarConexion();
+//		conn4.obtenerfechaEntrega();
+//		System.out.println("fin.-------");
 
 	}
 

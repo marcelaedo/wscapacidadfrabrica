@@ -4,6 +4,6 @@ import java.sql.SQLException;
 
 public interface FechaEntregaDAO {
 	
-	void obtenerfechaEntrega() throws SQLException;
+	void obtenerfechaEntrega() throws SQLException, ClassNotFoundException;
 
 }

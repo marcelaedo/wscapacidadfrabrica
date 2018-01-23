@@ -7,20 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.ConexionMySql;
+
 public class FechaEntregaMySqlDAO implements FechaEntregaDAO {
 
 	private Connection conn = null;
 
-	public void GenerarConexion() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		String jdbc = "jdbc:mysql://localhost:3306/gestion_proyectos";
-		conn = DriverManager.getConnection(jdbc, "gest_proys", "ges131Qft");
-
-	}
-
 	@Override
-	public void obtenerfechaEntrega() throws SQLException {
-
+	public void obtenerfechaEntrega() throws SQLException, ClassNotFoundException {
+		conn = ConexionMySql.GenerarConexion();
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement
 				.executeQuery("select max(artef.fech_entrega)from fab_neg_artefactos artef, fab_mae_artefacto maeart,fab_mae_producto maeprod,fab_mae_estadosolicitud maees,fab_neg_solicitud sol where artef.codi_artefacto=maeart.codi_artefacto and artef.codi_producto=maeprod.codi_producto and artef.codi_solicitud=sol.codi_solicitud and sol.codi_estado=maees.codi_estado and sol.codi_estado<>5");
@@ -32,6 +27,7 @@ public class FechaEntregaMySqlDAO implements FechaEntregaDAO {
 		}
 		rs.close();
 		statement.close();
+		conn.close();
 
 	}
 

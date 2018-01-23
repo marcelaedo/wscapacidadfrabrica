@@ -9,23 +9,14 @@ import java.util.List;
 import java.sql.Statement;
 
 import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
+import cl.akzio.auth.central.obtenercapacidadfabrica.provider.ConexionMySql;
 
 
 public class ProyectoMySqlDAO  implements ProyectoDAO{
 	
 	private Connection conn=null;
 	
-	
-	
-	
-	
-	public void GenerarConexion() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		String jdbc = "jdbc:mysql://localhost:3306/gestion_proyectos";
-		conn = DriverManager.getConnection(jdbc,"gest_proys", "ges131Qft");
-	
-	}
-	
+
 	
 
 
@@ -54,8 +45,8 @@ public class ProyectoMySqlDAO  implements ProyectoDAO{
 //	
 
 
-	public  void consulta() throws SQLException{
-		
+	public  void consulta() throws SQLException, ClassNotFoundException{
+		conn = ConexionMySql.GenerarConexion();
 		Statement statement=conn.createStatement();
 		ResultSet rs = statement.executeQuery("select pro.codi_proyecto,pro.codi_redmine,pro.nomb_proyecto,sol.codi_solicitud from  fab_neg_solicitud sol,pro_neg_proyecto pro,fab_mae_fabrica fab,pro_mae_estadoproyecto epro,fab_mae_estadosolicitud esol where pro.codi_proyecto=sol.codi_proyecto and pro.codi_estado=epro.codi_estado and sol.codi_estado=esol.codi_estado and sol.codi_fabrica= fab.codi_fabrica  and fab.codi_fabrica=1 and epro.codi_estado=2 and esol.codi_estado<>5       and pro.corr_seq=(select max(pro2.corr_seq) from pro_neg_proyecto pro2 where pro.codi_proyecto=pro2.codi_proyecto)");
 		while (rs.next()) {
