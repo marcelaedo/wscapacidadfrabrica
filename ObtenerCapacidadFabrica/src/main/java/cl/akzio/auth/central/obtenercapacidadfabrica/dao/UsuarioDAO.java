@@ -7,6 +7,6 @@ import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.UsuarioDTO;
 
 public interface UsuarioDAO {
 	
-	public List<UsuarioDTO> getUsuario() throws SQLException;
+	public List<UsuarioDTO> getUsuario() throws SQLException, ClassNotFoundException;
 
 }

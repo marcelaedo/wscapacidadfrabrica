@@ -8,6 +8,6 @@ import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ProyectoDTO;
 
 public interface ProyectoDAO {
 
-	public List<ProyectoDTO> getProyecto() throws SQLException;
+	public List<ProyectoDTO> getProyecto() throws SQLException, ClassNotFoundException;
 
 }

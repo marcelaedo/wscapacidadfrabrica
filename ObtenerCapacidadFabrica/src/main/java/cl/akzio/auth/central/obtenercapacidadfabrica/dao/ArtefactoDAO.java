@@ -7,6 +7,6 @@ import cl.akzio.auth.central.obtenercapacidadfabrica.DTO.ArtefactoDTO;
 
 public interface ArtefactoDAO {
 	
-	public List<ArtefactoDTO> getArtefacto() throws SQLException;
+	public List<ArtefactoDTO> getArtefacto() throws SQLException, ClassNotFoundException;
 
 }

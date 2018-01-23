@@ -1,18 +1,20 @@
 package cl.akzio.auth.central.obtenercapacidadfabrica.DTO;
 
+import java.sql.Date;
+
 public class ArtefactoDTO {
 
 	private int codiArtefacto;
 	private int codiProducto;
 	private int codiSolicitud;
-	private int codiRedmine;
-	private int nhhSolicitaads;
-	private int fechEntrega;
-	private int nombArtefacto;
-	private int nombProducto;
-	private int nombEstado;
-	private int nombUsuario;
-	private int nombProyecto;
+	private String codiRedmine;
+	private float nhhSolicitaads;
+	private Date fechEntrega;
+	private String nombArtefacto;
+	private String nombProducto;
+	private String nombEstado;
+	private String nombUsuario;
+	private String nombProyecto;
 	/**
 	 * @param codiArtefacto
 	 * @param codiProducto
@@ -27,9 +29,9 @@ public class ArtefactoDTO {
 	 * @param nombProyecto
 	 */
 	public ArtefactoDTO(int codiArtefacto, int codiProducto, int codiSolicitud,
-			int codiRedmine, int nhhSolicitaads, int fechEntrega,
-			int nombArtefacto, int nombProducto, int nombEstado,
-			int nombUsuario, int nombProyecto) {
+			String codiRedmine, float nhhSolicitaads, Date fechEntrega,
+			String nombArtefacto, String nombProducto, String nombEstado,
+			String nombUsuario, String nombProyecto) {
 		super();
 		this.codiArtefacto = codiArtefacto;
 		this.codiProducto = codiProducto;
@@ -88,97 +90,97 @@ public class ArtefactoDTO {
 	/**
 	 * @return the codiRedmine
 	 */
-	public int getCodiRedmine() {
+	public String getCodiRedmine() {
 		return codiRedmine;
 	}
 	/**
 	 * @param codiRedmine the codiRedmine to set
 	 */
-	public void setCodiRedmine(int codiRedmine) {
+	public void setCodiRedmine(String codiRedmine) {
 		this.codiRedmine = codiRedmine;
 	}
 	/**
 	 * @return the nhhSolicitaads
 	 */
-	public int getNhhSolicitaads() {
+	public float getNhhSolicitaads() {
 		return nhhSolicitaads;
 	}
 	/**
 	 * @param nhhSolicitaads the nhhSolicitaads to set
 	 */
-	public void setNhhSolicitaads(int nhhSolicitaads) {
+	public void setNhhSolicitaads(float nhhSolicitaads) {
 		this.nhhSolicitaads = nhhSolicitaads;
 	}
 	/**
 	 * @return the fechEntrega
 	 */
-	public int getFechEntrega() {
+	public Date getFechEntrega() {
 		return fechEntrega;
 	}
 	/**
 	 * @param fechEntrega the fechEntrega to set
 	 */
-	public void setFechEntrega(int fechEntrega) {
+	public void setFechEntrega(Date fechEntrega) {
 		this.fechEntrega = fechEntrega;
 	}
 	/**
 	 * @return the nombArtefacto
 	 */
-	public int getNombArtefacto() {
+	public String getNombArtefacto() {
 		return nombArtefacto;
 	}
 	/**
 	 * @param nombArtefacto the nombArtefacto to set
 	 */
-	public void setNombArtefacto(int nombArtefacto) {
+	public void setNombArtefacto(String nombArtefacto) {
 		this.nombArtefacto = nombArtefacto;
 	}
 	/**
 	 * @return the nombProducto
 	 */
-	public int getNombProducto() {
+	public String getNombProducto() {
 		return nombProducto;
 	}
 	/**
 	 * @param nombProducto the nombProducto to set
 	 */
-	public void setNombProducto(int nombProducto) {
+	public void setNombProducto(String nombProducto) {
 		this.nombProducto = nombProducto;
 	}
 	/**
 	 * @return the nombEstado
 	 */
-	public int getNombEstado() {
+	public String getNombEstado() {
 		return nombEstado;
 	}
 	/**
 	 * @param nombEstado the nombEstado to set
 	 */
-	public void setNombEstado(int nombEstado) {
+	public void setNombEstado(String nombEstado) {
 		this.nombEstado = nombEstado;
 	}
 	/**
 	 * @return the nombUsuario
 	 */
-	public int getNombUsuario() {
+	public String getNombUsuario() {
 		return nombUsuario;
 	}
 	/**
 	 * @param nombUsuario the nombUsuario to set
 	 */
-	public void setNombUsuario(int nombUsuario) {
+	public void setNombUsuario(String nombUsuario) {
 		this.nombUsuario = nombUsuario;
 	}
 	/**
 	 * @return the nombProyecto
 	 */
-	public int getNombProyecto() {
+	public String getNombProyecto() {
 		return nombProyecto;
 	}
 	/**
 	 * @param nombProyecto the nombProyecto to set
 	 */
-	public void setNombProyecto(int nombProyecto) {
+	public void setNombProyecto(String nombProyecto) {
 		this.nombProyecto = nombProyecto;
 	}
 	/* (non-Javadoc)

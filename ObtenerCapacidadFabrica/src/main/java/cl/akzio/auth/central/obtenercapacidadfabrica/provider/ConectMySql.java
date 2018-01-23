@@ -1,5 +1,0 @@
-package cl.akzio.auth.central.obtenercapacidadfabrica.provider;
-
-public class ConectMySql {
-
-}
